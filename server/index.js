@@ -42,4 +42,23 @@ app.post('/upload', upload.single('file'), (req, res) => {
     });
 });
 
+
+// Get all products
+app.get('/products', (req, res) => {
+  db.all("SELECT * FROM products", [], (err, rows) => {
+    if (err) return res.status(500).json({ error: err.message });
+    res.json(rows);
+  });
+});
+
+// Get product by ID
+app.get('/products/:id', (req, res) => {
+  const { id } = req.params;
+  db.get("SELECT * FROM products WHERE id = ?", [id], (err, row) => {
+    if (err) return res.status(500).json({ error: err.message });
+    res.json(row);
+  });
+});
+
+
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
