@@ -145,6 +145,15 @@ app.get('/products/:id', (req, res) => {
   });
 });
 
+// Get all departments
+app.get('/departments', (req, res) => {
+  db.all("SELECT * FROM departments", [], (err, rows) => {
+    if (err) return res.status(500).json({ error: err.message });
+    res.json(rows);
+  });
+});
+
+
 // =============================
 // Start Server
 // =============================
